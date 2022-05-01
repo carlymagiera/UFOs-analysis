@@ -8,7 +8,7 @@ The purpose of this project is to display these ufo sightings in the table. Usin
 ## Results
 The ufo sighting data table initially will display all off the logged sightings. What is presented in the table can be narrowed down using the five filters. These filters can also be used to pinpoint a specific sighting. The dynamic table will change depending upon the search criteria for the date, location, or shape. 
 
-![ufo example search][search_example.png]
+![ufo example search](static/images/search_example.png)
 
 For example, in the image above, the table only displays ufo sightings that occurred in the US on 1/9/2010 due to the input search criteria using the filters on the left hand side of the page. 
 
