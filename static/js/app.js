@@ -23,143 +23,70 @@ function buildTable(data) {
   });
 }
 
-// var filters = {};
+// Create a variable to keep track of all the filters as an object.
+var filters = [];
 
-// function updateFilters() {
-//   let changedElement = d3.select(this);
-//   let elementValue = changedElement.property("value");
-//   console.log(elementValue);
+// Use this function to update the filters. 
+function updateFilters() {
 
-//   let filterId = changedElement.attr("id");
+//Save the value that was changed as a variable.
+  var dateValue = d3.select("#datetime").property("value");
+  console.log(dateValue);
+  var cityValue = d3.select("#city").property("value");
+  console.log(cityValue);
+  var stateValue = d3.select("#state").property("value");
+  console.log(stateValue);
+  var countryValue = d3.select("#country").property("value");
+  console.log(countryValue);
+  var shapeValue = d3.select("#shape").property("value");
+  console.log(shapeValue);
 
-//   if (elementValue) {
-//     filters[filterId] = elementValue;
-//   }
-//   else {
-//     delete filters[filterId];
-//   }
-
-// updateTable();
-
-// function updateTable
+    // ufo filter rule - first item in list = date, second = city, third = state, fourth = country, fifth = shape. static
+    filters[0]=dateValue;
+    filters[1]=cityValue;
+    filters[2]=stateValue;
+    filters[3]=countryValue;
+    filters[4]=shapeValue;
   
+    // Call function to apply all filters and rebuild the table
+    filterTable(filters)
 
+}
 
-
-  // let dateChange = d3.select("datetime");
-  // let cityChange = d3.select("city");
-  // let stateChange = d3.select("state");
-  // let countryChange = d3.select("country");
-  // let shapeChange = d3.select("state");
-
-  // let dateValue = dateChange.property("value");
-  // console.log(dateValue);
-  // let cityValue = cityChange.property("value");
-  // console.log(dateValue);
-  // let stateValue = stateChange.property("value");
-  // console.log(dateValue);
-  // let countryValue = countryChange.property("value");
-  // console.log(dateValue);
-  // let shapeValue = shapeChange.property("value");
-  // console.log(dateValue);
-
-  // let dateId = dateChange.attr("id");
-  // console.log(dateId);
-
-  // if (dateValue) {
-  //   filters[dateId] = dateValue;
-  // }
-  // else{
-  //   delete filters[dateId]
-  // }
-
-
-
-
-function filterTable()
-
-//d3.selectAll("input").on("change", updateFilters);
-
-createTable(Data);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //////////////////////////////////////////////////
-
-
-
-// // 1. Create a variable to keep track of all the filters as an object.
-// var filters = {};
-
-// // 3. Use this function to update the filters. 
-// function updateFilters() {
-//   var date = d3.select("#datetime").property("value");
-//   var city = d3.select("#city").property("value");
-//   var state = d3.select("#state").property("value");
-//   var country = d3.select("#country").property("value");
-//   var shape = d3.select("#shape").property("value");
-
-//     // 4a. Save the element that was changed as a variable.
-
-//     // 4b. Save the value that was changed as a variable.
-
-//     // 4c. Save the id of the filter that was changed as a variable.
-
+  // Use this function to filter the table when data is entered.
+  function filterTable(ufoFilters) {
+    console.log(ufoFilters)
   
-//     // 5. If a filter value was entered then add that filterId and value
-//     // to the filters list. Otherwise, clear that filter from the filters object.
- 
+    // Set the filtered data to the tableData.
+    let filteredData = tableData;
   
-//     // 6. Call function to apply all filters and rebuild the table
-//     filterTable();
+    // Loop through all of the filters and keep any data that matches the filter values
+      if (ufoFilters[0] !== ""){
+        filteredData = filteredData.filter(row => row.datetime === ufoFilters[0])
+      };
+
+      if (ufoFilters[1] !== ""){
+        filteredData = filteredData.filter(row => row.city === ufoFilters[1])
+      };
+
+      if (ufoFilters[2] !== ""){
+        filteredData = filteredData.filter(row => row.state === ufoFilters[2])
+      };
+
+      if (ufoFilters[3] !== ""){
+        filteredData = filteredData.filter(row => row.country === ufoFilters[3])
+      };
+
+      if (ufoFilters[4] !== ""){
+        filteredData = filteredData.filter(row => row.shape === ufoFilters[4])
+      };
   
-//   }
+    // Finally, rebuild the table using the filtered data
+    buildTable(filteredData);
+  }
   
-//   // 7. Use this function to filter the table when data is entered.
-//   function filterTable() {
-//     let updateFilters = filterTable;
+  // Attach an event to listen for changes to each filter
+  d3.selectAll("input").on("change", updateFilters);
   
-//     // 8. Set the filtered data to the tableData.
-    
-  
-//     // 9. Loop through all of the filters and keep any data that
-//     // matches the filter values
-//     if (date) {
-//       filteredData = filteredData.filter(row => row.datetime === date);
-//   };
-  
-//     // 10. Finally, rebuild the table using the filtered data
-    
-//   }
-  
-//   // 2. Attach an event to listen for changes to each filter
-//   d3.selectAll("#datetime", "#city", "#state", "#country", "#shape").on("click", updateFilters);
-  
-//   // Build the table when the page loads
-//   buildTable(tableData);
+  // Build the table when the page loads
+  buildTable(data);
